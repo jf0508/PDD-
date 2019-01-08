@@ -1,6 +1,6 @@
 # pdddemo
 
-> 拼多多练习
+> 拼多多小项目练习
 
 ## Build Setup
 
