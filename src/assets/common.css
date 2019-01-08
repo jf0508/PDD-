@@ -1,0 +1,267 @@
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+html {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle;
+}
+q, blockquote {
+    quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none;
+}
+a img {
+    border: none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+a:hover{
+    color: inherit;
+    text-decoration: none;
+}
+b{
+    font-weight: 600;
+}
+textarea{
+    font-family: 'PingFang SC','Microsoft YaHei','微软雅黑', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback';  
+}
+body, html{
+    width: 100%;
+    height: 100%;
+    font-family: 'PingFang SC','Microsoft YaHei','微软雅黑', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback';
+}
+button,input{
+    border:0;
+    outline: none;
+    background: transparent;
+}
+h1,h2,h3{
+    font-weight: 600;
+}
+.left{
+    float: left;  
+}
+.right{
+    float: right;
+}
+.fw-500{
+    font-weight: 500;
+}
+/*字体图标重置*/
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+/*文字溢出切除*/
+.cut-text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/*高度自适应图片*/
+.imgFullx{
+    width: 100%;
+    height: auto;
+    display: block;
+    font-size: 0;
+}
+
+/*cover 图片*/
+.imgFull{
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-size: 0;
+}
+.mask{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 9999;
+}
+/*相对定位*/
+.relative{
+    position: relative;
+}
+
+/*弹性盒子*/
+.flex{
+    display: flex;
+}
+.felx-1{
+    flex: 1;
+}
+.flex-center{
+    align-items: center;
+}
+.just-center{
+    justify-content: center;
+}
+.just-between{
+    justify-content: space-between;
+}
+
+.text-center{
+    text-align: center !important;;
+}
+.text-left{
+    text-align: left !important;;
+}
+.text-right{
+    text-align: right !important;
+}
+/*cut-before*/
+.cut-before::before{
+    content: '';
+    height: 26px;
+    width: 100%;
+    display: block;
+    background-color: #f5f5f5;
+}
+/*cut-after*/
+.cut-after::after{
+    content: '';
+    height: 26px;
+    width: 100%;
+    display: block;
+    background-color: #f5f5f5;
+}
+
+/*vi主色*/
+.vi-bg{
+    background: #e30e27;
+}
+
+/*字体主色*/
+.vi-color{
+    color: #e30e27;
+}
+.font-through{
+    text-decoration: line-through;
+}
+/*字体大小*/
+.font-20{
+    font-size: 20px;
+    font-weight: 500;
+}
+.font-24{
+    font-size: 24px;
+}
+.font-26{
+    font-size: 26px;
+}
+.font-28{
+    font-size: 28px;
+}
+.font-30{
+    font-size: 30px;
+}
+.font-32{
+    font-size: 32px;
+}
+.font-34{
+    font-size: 34px;
+}
+.font-36{
+    font-size: 36px;
+}
+.font-40{
+    font-size: 40px;
+}
+.font-44{
+    font-size: 44px;
+}
+/*字体颜色*/
+.font-000{
+    color: #000;
+}
+.font-333{
+    color: #333;
+}
+.font-666{
+    color: #666;
+}
+.font-999{
+    color: #999;
+}
+/*字体加粗*/
+.font-bold{
+    font-weight: 600;
+}
+/*栅格*/
+.col-1{
+    width: 10%;
+}
+.col-2{
+    width: 20%;
+}
+.col-3{
+    width: 30%;
+}
+.col-4{
+    width: 40%;
+}
+.col-5{
+    width: 50%;
+}
+.col-6{
+    width: 60%;
+}
+.col-7{
+    width: 70%;
+}
+.col-8{
+    width: 80%;
+}
+.col-9{
+    width: 90%;
+}
+.col-10{
+    width: 100%;
+}
