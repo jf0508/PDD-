@@ -1,4 +1,6 @@
 export default {
+  //是否显示tabbar
+  isShowTabbar:true,
   // 首页轮播图
   homecasual: [],
   // 首页导航

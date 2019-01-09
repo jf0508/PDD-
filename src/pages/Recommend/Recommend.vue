@@ -26,7 +26,9 @@ export default {
   name:'Recommend',
   data(){
     return{
-
+      currentPage:'',
+      page:1,
+      count:10,
     }
   },
   components:{
@@ -37,19 +39,48 @@ export default {
     ...mapState(['recommendshoplist'])
   },
   methods: {
-     initScroll(){
-      let RecommendScroll = new BScroll('.remcomend-container',{})
-    }
+     initScroll(){ //初始化滚动
+      this.RecommendScroll = new BScroll('.remcomend-container',{
+        probeType:3,
+        scrollY:true
+      });
+       //监听滚动
+    this.RecommendScroll.on('touchEnd',(pos)=>{
+     /*  console.log(pos) */
+      //下拉刷新
+      if(pos.y>50){
+        console.log('下拉刷新')
+      }
+      //上拉加载
+      let RecommendMaxScroll = this.RecommendScroll.maxScrollY
+      if(pos.y<RecommendMaxScroll){
+        console.log('上拉加载')
+          this.$store.dispatch('reqRecommendShopList',{
+          page:this.page,
+          count:this.count
+        })
+      }
+      
+    })
+    this.RecommendScroll.on('scrollEnd',()=>{
+       this.RecommendScroll.refresh()
+    })
+    },
+   
   },
   watch: {
     recommendshoplist(){  //异步监听组件方法1；
       this.$nextTick(()=>{
         this.initScroll();
+        this.page+=1
       })
     }
   },
   mounted() {
-    this.$store.dispatch('reqRecommendShopList')
+    this.$store.dispatch('reqRecommendShopList',{
+      page:this.page,
+      count:this.count
+    })
   },
 }
 </script>

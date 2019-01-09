@@ -24,14 +24,14 @@ export default {
     commit(HOME_NAV,{homenav:res.message.data})
   },
 
-  async reqHomeShopList({commit},callback){  //首页商品
-    const res = await getHomeShopList();
+  async reqHomeShopList({commit},parms,callback){  //首页商品
+    const res = await getHomeShopList(parms);
     commit(HOME_SHOPLIST,{homeshoplist:res.message.goods_list})
     callback && callback();
   },
-  async reqRecommendShopList({commit},callback){  //推荐列表商品
-    const res = await getRecommendShopList();
-    commit(RECOMMEND_SHOPLIST,{recommendshoplist:res.message.data})
+  async reqRecommendShopList({commit},parms,callback){  //推荐列表商品
+    const res = await getRecommendShopList(parms);
+    commit(RECOMMEND_SHOPLIST,{recommendshoplist:res.data})
     callback && callback();
   },
 

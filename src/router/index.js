@@ -17,7 +17,8 @@ export default new Router({
         {
           name:'Hot',
           path: 'hot',
-          component: resolve=>require(['@/pages/Home/Children/Hot/Hot.vue'],resolve)
+          component: resolve=>require(['@/pages/Home/Children/Hot/Hot.vue'],resolve),
+          meta:{isShowTabbar:true}
         },{
           name:'Department',
           path: 'department',
@@ -54,19 +55,27 @@ export default new Router({
     },{
       name:'Recommend',
       path: '/recommend',
-      component:resolve=>require(['@/pages/Recommend/Recommend.vue'],resolve)
+      component:resolve=>require(['@/pages/Recommend/Recommend.vue'],resolve),
+      meta:{isShowTabbar:true}
     },{
       name:'Search',
       path: '/search',
-      component:resolve=>require(['@/pages/Search/Search.vue'],resolve)
+      component:resolve=>require(['@/pages/Search/Search.vue'],resolve),
+      meta:{isShowTabbar:true}
     },{
       name:'Chat',
       path: '/chat',
-      component:resolve=>require(['@/pages/Chat/Chat.vue'],resolve)
+      component:resolve=>require(['@/pages/Chat/Chat.vue'],resolve),
+      meta:{isShowTabbar:true}
     },{
       name:'Mine',
       path: '/mine',
-      component:resolve=>require(['@/pages/Mine/Mine.vue'],resolve)
+      component:resolve=>require(['@/pages/Mine/Mine.vue'],resolve),
+      meta:{isShowTabbar:true}
+    },{
+      name:'Login',
+      path: '/login',
+      component:resolve=>require(['@/pages/Login/Login.vue'],resolve)
     }
   ]
 })
