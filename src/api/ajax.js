@@ -38,7 +38,7 @@ export default {
   },
   post(url = '', data = {}){
     return new Promise(function (resolve, reject) {
-      axios.get(url, data)
+      axios.post(url, data)
         .then(function (response) {
           resolve(response.data);
         })

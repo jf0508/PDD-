@@ -56,7 +56,7 @@
             <section class="login-verification">
               <input
                 type="tel"
-                maxlength="8"
+                maxlength="6"
                 placeholder="验证码"
                 v-model="code"
               >
@@ -97,21 +97,21 @@
                 <div class="switch-show">
                     <img @click.prevent="dealPwdMode(false)" :class="{on:pwdMode}" src="./imgs/hide_pwd.png"
                        width="20">
-                  <img @click.prevent="dealPwdMode(true)" :class="{on:!pwdMode}" src="./imgs/show_pwd.png"
+                    <img @click.prevent="dealPwdMode(true)" :class="{on:!pwdMode}" src="./imgs/show_pwd.png"
                        width="20">
                 </div>
               </section>
               <section class="login-message">
                 <input
                   type="text"
-                  maxlength="11"
+                  maxlength="4"
                   placeholder="验证码"
                   v-model="captcha"
                 >
                 <img
                   ref="captcha"
                   class="get-verification"
-                  src="./imgs/captcha.svg"
+                  src="http://10.211.55.6:3000/api/captcha"
                   alt="captcha"
                   @click.prevent="getCaptcha()"
                 >
@@ -134,6 +134,9 @@
 
 <script>
 import vuex from 'vuex'
+import Axios from 'axios';
+import {getPhoneCode,PhoneCodeLogin,UserPwdLogin,getUserInfo} from '../../api/index.js'
+import { Toast } from 'mint-ui';
 export default {
   data () {
     return {
@@ -156,7 +159,8 @@ export default {
     dealLoginMode (flag) {
       this.loginMode = flag
     },
-    getVerifyCode(){
+    async getVerifyCode(){
+      if(this.phoneRight){
       //验证码倒计时
       if(this.phoneRight){
         this.countDown = 60
@@ -167,15 +171,95 @@ export default {
           }
         }, 1000);
       }
+      let instance=Toast({
+          message: '发送成功',
+          iconClass:'iconfont icon-duigou'
+        });
+      await getPhoneCode({phone:this.phone}).then(res=>{
+        console.log(res)
+        this.Regcode = res.message
+        instance.close();
+      });
+       }else{ return}
     },
     //密码显示方式
     dealPwdMode(flag){
       this.pwdMode = flag;
+    },
+    //更换验证码
+    getCaptcha(){  
+        this.$refs.captcha.src = 'http://10.211.55.6:3000/api/captcha?time='+new Date();
+    },
+    async login(){
+      if(this.loginMode){ //验证码登录
+         console.log('验证码登录')
+         if(!this.phone){ //未输入
+           Toast('请输入手机号')
+           return
+         }else if(!this.phoneRight){ //乱输入
+           Toast('请输入正确的手机号')
+           return
+         }
+
+         if(!this.code){
+            Toast('请输入验证码')
+           return
+         }else if(!(/^\d{6}$/gi.test(this.code))){
+            Toast('验证码格式错误')
+            return
+         }else if(this.code !=this.Regcode){
+           Toast('验证码错误')
+            return
+         }
+
+        //登录后台校验
+      const result =  await PhoneCodeLogin({phone:this.phone,code:this.code})
+       console.log('短信前台登录成功-进入后台校验',result) 
+       if(result.code === 200){ //登录成功
+         this.userInfo = result.message
+         window.localStorage.setItem("userInfo", JSON.stringify(this.userInfo))
+         this.$store.commit('userInfohandler',this.userInfo)
+         this.$router.back();
+       }else{ //登录失败
+         Toast('手机号或者验证码错误')
+       }
+
+      }else{ //密码登录
+         console.log('密码登录')
+          if(!this.user_name){ //未输入
+           Toast('请输入用户名/手机号/邮箱')
+           return
+         }else if(!this.pwd){ //乱输入
+           Toast('请输入密码')
+           return
+         }else if(!this.captcha){ //未输入验证码
+           Toast('请输入验证码')
+           return
+         }
+         console.log(this.captcha)
+         //用户名密码登录
+          //登录后台校验
+      const result =  await UserPwdLogin({
+        user_name:this.user_name,
+        pwd:this.pwd,
+        captcha:this.captcha
+      })
+       console.log('前台密码登录成功-进入后台校验',result) 
+       if(result.code === 200){ //登录成功
+         this.userInfo = result.message
+         this.$store.commit('userInfohandler',this.userInfo)
+         this.$router.back();
+       }else{ //登录失败
+         Toast('手机号或者密码错误')
+       }
+
+
+      }
     }
   },
   computed: {
     phoneRight(){ //验证手机号
-      return /^[1][3,3,5,7,8][0-9]{9}$/.test(this.phone)
+      return /^[1][3,4,5,7,8][0-9]{9}$/.test(this.phone)
     }
   },
 }

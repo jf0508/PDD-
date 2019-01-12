@@ -22,6 +22,9 @@ export default {
   computed: {
     ...mapState(['isShowTabbar']) //通过vuex控制tabbar
   },
+  created() {
+    /* this.$store.dispatch('reqUserInfo')  //session存在问题 */
+  },
 }
 </script>
 

@@ -6,7 +6,7 @@
           <div class="item-bottombox">
               <span class="item-price">￥{{item.price/100}}</span>
               <span class="item-sales-tip">{{item.sales_tip}}</span>
-              <button>找相关</button>
+              <button @click="cellClick(item)">购买</button>
           </div>
         </div>
       
@@ -16,7 +16,11 @@
 export default {
   name:"ShopList",
   props:{
-      item:Object
+      item:Object,
+      cellClick:{
+        type:Function,
+        default:()=>{}
+      }
     },
   data(){
     return{}

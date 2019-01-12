@@ -13,7 +13,7 @@
           </div> 
         </li>
         -->
-      <shop-list tag='li' v-for="(item,index) in recommendshoplist" :item=item :key='index'/>
+      <shop-list tag='li' v-for="(item,index) in recommendshoplist" :item=item :key='index' :cellClick='addCart'/>
       </ul>
     </div>
 </template>
@@ -21,7 +21,9 @@
 <script>
 import {mapState} from 'vuex'
 import ShopList from '../../components/ShopList/shoplist'
+import {AddShopCart} from '../../api/index.js'
 import BScroll from 'better-scroll'
+import { Toast } from 'vant';
 export default {
   name:'Recommend',
   data(){
@@ -66,7 +68,37 @@ export default {
        this.RecommendScroll.refresh()
     })
     },
-   
+    //添加到购物车
+    async addCart(props){
+      if(this.userInfos){ //已经登录
+        const res = await AddShopCart({
+        goods_id : props.goods_id,
+        goods_name : props.goods_name,
+        thumb_url : props.thumb_url,
+        price : props.price,
+        //is_pay : // 0 未购买 1购买
+        });
+        console.log(res)
+        Toast.success({
+          message:'加入成功',
+          duration:1000,
+        });
+      }else{ //未登录
+        Toast.fail({
+          message:'您还未登录',
+          duration:1000,
+        });
+     
+        setTimeout(()=>{
+        this.$router.push('/login')
+        },1500)
+      }
+     
+   }
+  },
+  created() {
+    this.$store.commit("isShowTabbarHandle",true)
+    this.userInfos = JSON.parse(window.localStorage.getItem("userInfo")) //进入我的界面 验证是否登录
   },
   watch: {
     recommendshoplist(){  //异步监听组件方法1；

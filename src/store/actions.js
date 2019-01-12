@@ -3,14 +3,18 @@ import {
   getHomeNav,
   getHomeShopList,
   getRecommendShopList,
-  getSearchShopList
+  getSearchShopList,
+  GetCardProds,
+  getUserInfo
 } from '../api'
 import {
   HOME_CASUAL,
   HOME_NAV,
   HOME_SHOPLIST,
   RECOMMEND_SHOPLIST,
-  SEARCH_SHOPLIST
+  SEARCH_SHOPLIST,
+  GET_CARDGOODS,
+  GET_USERINFO
 } from './mutation-type'
 
 export default {
@@ -39,7 +43,19 @@ export default {
     const res = await getSearchShopList();
     commit(SEARCH_SHOPLIST,{sreachshoplist:res.message.data})
     callback && callback();
-  }
+  },
 
-  
+  async reqGetCardProds({commit},callback){  //获取购物车商品
+    const res = await GetCardProds();
+    commit(GET_CARDGOODS,{cardprods:res.message})
+    callback && callback();
+  },
+    //获取已经登录的用户信息
+  /* async reqUserInfo({commit}){
+    const res = await getUserInfo();
+    console.log(res)
+    if(res.success_code === 200){
+      commit([GET_USERINFO],{uesrInfo:res.message})
+    }
+  } */
 }
