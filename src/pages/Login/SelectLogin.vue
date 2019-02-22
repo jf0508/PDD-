@@ -8,7 +8,9 @@
 
 <script>
 export default {
-
+   created() {
+      this.$store.commit('isShowTabbarHandle',false) // 显示tabbar
+    },
 }
 </script>
 

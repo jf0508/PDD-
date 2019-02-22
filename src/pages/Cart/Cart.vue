@@ -23,16 +23,16 @@
             </div>
             <div class="list_con_right">
               <div class="shop_img">
-                <img :src="item.thumb_url" alt="">
+                <img v-lazy="item.thumb_url" alt="">
               </div>
               <div class="shop_con">
                 <a href="">{{item.goods_name}}</a>
                 <p class="shop_price">{{item.price/100 | moneyFormat(item.price)}}</p>
                 <div class="shop_deal">
                   <div class="shop_deal_left">
-                    <span @click.stop="changeCount(item,false)">-</span>
+                    <span @click.stop.prevent="changeCount(item,false)">-</span>
                     <input type="tel" value="1" v-model="item.buy_count">
-                    <span @click.stop="changeCount(item,true)"> +</span>
+                    <span @click.stop.prevent="changeCount(item,true)"> +</span>
                   </div>
                   <div class="shop_deal_right" @click.stop="removeProds(item)">
                     <span></span>
@@ -85,7 +85,7 @@
      watch: {
      cardprods(){  //异步监听组件方法1；
       this.$nextTick(()=>{
-        this.initScroll();
+        //this.initScroll();
       })
     }
   },
@@ -95,9 +95,9 @@
       },
         initScroll(){ //初始化滚动
         this.RecommendScroll = new BScroll('.jd_shopCart_list',{
-          probeType:3,
+          probeType:2,
           scrollY:true,
-          click:true
+          click:true,
         });
       },
       //加减商品数量
@@ -168,9 +168,16 @@
       ...mapState(['cardprods']),
 
     },
+    created() {
+       this.$store.commit('isShowTabbarHandle',true) // 显示tabbar
+    },
+    updated() {
+      //
+    },
     mounted() {
-      this.initScroll();
+      //this.initScroll();
       this.$store.dispatch('reqGetCardProds')
+      this.$store.commit('isShowTabbarHandle',true) // 显示tabbar
     },
   }
 </script>
@@ -226,7 +233,7 @@
       border-top 1px solid #e1e1e1
       border-bottom 1px solid #e1e1e1
       height 100%
-      overflow hidden
+      overflow-x hidden
       margin-top 1px
       flex 1
       section

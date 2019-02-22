@@ -5,7 +5,7 @@
           <div class="swiper-container" v-if='homecasual.length>0' cancelable='true'>
             <div class="swiper-wrapper" >
               <div class="swiper-slide" v-for="(item,index) in homecasual" :key="index">
-              <img data-index="8" data-banner_id="11884" data-gg_id="0" :src="item.imgurl">
+              <img data-index="8" data-banner_id="11884" data-gg_id="0" v-lazy="item.imgurl">
               </div>
             </div>
             <!-- 如果需要分页器 -->

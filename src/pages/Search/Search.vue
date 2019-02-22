@@ -127,6 +127,9 @@ export default {
         this.Leftscroll.scrollToElement(el,300,0,-100)
     }
   },
+  created() {
+     this.$store.commit('isShowTabbarHandle',true) // 显示tabbar
+  },
   mounted () {
     //获取搜索列表
     this.$store.dispatch('reqSearchShopList',()=>{  //异步监听组件方法2；

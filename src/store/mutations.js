@@ -4,6 +4,7 @@ import {
   HOME_NAV,
   HOME_SHOPLIST,
   RECOMMEND_SHOPLIST,
+  RECOMMEND_SHOPLISTS,
   SEARCH_SHOPLIST,
   GET_USERINFO,
   GET_CARDGOODS
@@ -25,6 +26,9 @@ export default {
   [RECOMMEND_SHOPLIST] (state, { recommendshoplist }) {
     state.recommendshoplist =  state.recommendshoplist.concat(recommendshoplist) ; //加载拼接vuex数据
   },
+  [RECOMMEND_SHOPLISTS] (state, { recommendshoplist }) {
+    state.recommendshoplist = recommendshoplist; 
+  },
   [SEARCH_SHOPLIST] (state, { sreachshoplist }) {
     state.sreachshoplist = sreachshoplist;
   },
@@ -37,7 +41,7 @@ export default {
     state.userInfo = users;
   },
   //购物车加减数量
-  changeCardProds(state,isAdd,cardprods){
+  changeCardProds(state,isAdd){
     if(isAdd ===true){
       state.cardprods.buy_count++
     }else{

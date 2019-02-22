@@ -1,6 +1,6 @@
 <template>
         <div class="recommend-item" >
-          <img :src="item.thumb_url" style="width:100%" v-if="item.thumb_url">
+          <img v-lazy="item.thumb_url" style="width:100%" v-if="item.thumb_url">
           <h4 class="item-title">{{item.short_name}}</h4>
           <div class="tags"></div>
           <div class="item-bottombox">

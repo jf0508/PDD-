@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div class="aapScroll">
-      <router-view></router-view>
+      <!-- <keep-alive> -->
+        <router-view></router-view>
+     <!--  </keep-alive> -->
     </div>
     <!-- <tabbar v-if='$route.meta.isShowTabbar'/>  -->
      <tabbar v-if='isShowTabbar'/> 

@@ -3,7 +3,7 @@
       <ul class="recommend">
         <!--  
           <li class="recommend-item" v-for="(item,index) in recommendshoplist" :key='index'>
-         <img :src="item.thumb_url" alt="" style="width:100%" v-if="item.thumb_url">
+         <img v-lazy="item.thumb_url" alt="" style="width:100%" v-if="item.thumb_url">
           <h4 class="item-title">{{item.short_name}}</h4>
           <div class="tags"></div>
           <div class="item-bottombox">
@@ -52,6 +52,10 @@ export default {
       //下拉刷新
       if(pos.y>50){
         console.log('下拉刷新')
+         this.$store.dispatch('reqRecommendShopLists',{
+          page:this.page++,
+          count:this.count
+        })
       }
       //上拉加载
       let RecommendMaxScroll = this.RecommendScroll.maxScrollY
@@ -66,6 +70,9 @@ export default {
     })
     this.RecommendScroll.on('scrollEnd',()=>{
        this.RecommendScroll.refresh()
+    })
+     this.RecommendScroll.on('pullUpLoad',()=>{
+      console.log('已到最底部')
     })
     },
     //添加到购物车

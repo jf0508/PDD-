@@ -12,6 +12,7 @@ import {
   HOME_NAV,
   HOME_SHOPLIST,
   RECOMMEND_SHOPLIST,
+  RECOMMEND_SHOPLISTS,
   SEARCH_SHOPLIST,
   GET_CARDGOODS,
   GET_USERINFO
@@ -36,6 +37,16 @@ export default {
   async reqRecommendShopList({commit},parms,callback){  //推荐列表商品
     const res = await getRecommendShopList(parms);
     commit(RECOMMEND_SHOPLIST,{recommendshoplist:res.data})
+    callback && callback();
+  },
+  async reqRecommendShopLists({commit},parms,callback){  //下拉刷新推荐列表商品
+    const res = await getRecommendShopList(parms);
+    if(res.data.length>0){
+      commit(RECOMMEND_SHOPLISTS,{recommendshoplist:res.data})
+    }else{
+      return
+    }
+    
     callback && callback();
   },
 
