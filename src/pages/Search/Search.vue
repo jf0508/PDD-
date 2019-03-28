@@ -1,7 +1,9 @@
 <template>
   <div class="serachBox">
-    <SearchPanel/>
-    <search-nav />
+    <transition name="slide-fade">
+       <SearchPanel v-if='isSearchShow' :isShow='isShow'/>
+    </transition>   
+    <search-nav :isShow='isShow'/>
     <div class="shopContainer">
       <div class="search-left">
         <ul class="content">
@@ -58,7 +60,8 @@ export default {
   data () {
     return {
       scrollY:'', //滚动垂直位置
-      RightTops:[]  //右侧商品坐标
+      RightTops:[],  //右侧商品坐标
+      isSearchShow:false
     }
   },
   components: {
@@ -86,6 +89,9 @@ export default {
     }
   },
   methods: {
+    isShow(flag){
+      this.isSearchShow = flag
+    },
     initScroll(){
       this.Leftscroll = new BScroll('.search-left', {click: true,probeType:3 })
       this.Rightscroll = new BScroll('.search-right', {
@@ -120,6 +126,9 @@ export default {
         let el = menulsits[index] //左侧当前Li标签滚动位置
         this.Leftscroll.scrollToElement(el,300,0,-100)
     }
+  },
+  created() {
+     this.$store.commit('isShowTabbarHandle',true) // 显示tabbar
   },
   mounted () {
     //获取搜索列表

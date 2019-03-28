@@ -3,7 +3,7 @@
       <ul class="recommend">
         <!--  
           <li class="recommend-item" v-for="(item,index) in recommendshoplist" :key='index'>
-         <img :src="item.thumb_url" alt="" style="width:100%" v-if="item.thumb_url">
+         <img v-lazy="item.thumb_url" alt="" style="width:100%" v-if="item.thumb_url">
           <h4 class="item-title">{{item.short_name}}</h4>
           <div class="tags"></div>
           <div class="item-bottombox">
@@ -13,7 +13,7 @@
           </div> 
         </li>
         -->
-      <shop-list tag='li' v-for="(item,index) in recommendshoplist" :item=item :key='index'/>
+      <shop-list tag='li' v-for="(item,index) in recommendshoplist" :item=item :key='index' :cellClick='addCart'/>
       </ul>
     </div>
 </template>
@@ -21,12 +21,16 @@
 <script>
 import {mapState} from 'vuex'
 import ShopList from '../../components/ShopList/shoplist'
+import {AddShopCart} from '../../api/index.js'
 import BScroll from 'better-scroll'
+import { Toast } from 'vant';
 export default {
   name:'Recommend',
   data(){
     return{
-
+      currentPage:'',
+      page:1,
+      count:10,
     }
   },
   components:{
@@ -37,19 +41,85 @@ export default {
     ...mapState(['recommendshoplist'])
   },
   methods: {
-     initScroll(){
-      let RecommendScroll = new BScroll('.remcomend-container',{})
-    }
+     initScroll(){ //初始化滚动
+      this.RecommendScroll = new BScroll('.remcomend-container',{
+        probeType:3,
+        scrollY:true
+      });
+       //监听滚动
+    this.RecommendScroll.on('touchEnd',(pos)=>{
+     /*  console.log(pos) */
+      //下拉刷新
+      if(pos.y>50){
+        console.log('下拉刷新')
+         this.$store.dispatch('reqRecommendShopLists',{
+          page:this.page++,
+          count:this.count
+        })
+      }
+      //上拉加载
+      let RecommendMaxScroll = this.RecommendScroll.maxScrollY
+      if(pos.y<RecommendMaxScroll){
+        console.log('上拉加载')
+          this.$store.dispatch('reqRecommendShopList',{
+          page:this.page,
+          count:this.count
+        })
+      }
+      
+    })
+    this.RecommendScroll.on('scrollEnd',()=>{
+       this.RecommendScroll.refresh()
+    })
+     this.RecommendScroll.on('pullUpLoad',()=>{
+      console.log('已到最底部')
+    })
+    },
+    //添加到购物车
+    async addCart(props){
+      if(this.userInfos){ //已经登录
+        const res = await AddShopCart({
+        goods_id : props.goods_id,
+        goods_name : props.goods_name,
+        thumb_url : props.thumb_url,
+        price : props.price,
+        //is_pay : // 0 未购买 1购买
+        });
+        console.log(res)
+        Toast.success({
+          message:'加入成功',
+          duration:1000,
+        });
+      }else{ //未登录
+        Toast.fail({
+          message:'您还未登录',
+          duration:1000,
+        });
+     
+        setTimeout(()=>{
+        this.$router.push('/login')
+        },1500)
+      }
+     
+   }
+  },
+  created() {
+    this.$store.commit("isShowTabbarHandle",true)
+    this.userInfos = JSON.parse(window.localStorage.getItem("userInfo")) //进入我的界面 验证是否登录
   },
   watch: {
     recommendshoplist(){  //异步监听组件方法1；
       this.$nextTick(()=>{
         this.initScroll();
+        this.page+=1
       })
     }
   },
   mounted() {
-    this.$store.dispatch('reqRecommendShopList')
+    this.$store.dispatch('reqRecommendShopList',{
+      page:this.page,
+      count:this.count
+    })
   },
 }
 </script>

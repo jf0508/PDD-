@@ -10,21 +10,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      /* '/api': {
-        target: 'http://10.211.55.6:3000',//设置你调用的接口域名和端口号 别忘了加http
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''//这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
-        }
-      } */
       '/api': {  //使用"/api"来代替"http://f.apiplus.c"
         target: 'http://10.211.55.6:3000', //源地址
-        changeOrigin: true, //改变源
-        headers:{
+        changeOrigin: true, //跨域
+       /*  headers:{
           'X-Reauested-With':'XMLHttpRequest',
           'Content-Type':'application/json; charset=UTF-8',
           'Access-Control-Allow-Origin':'*'
-        },
+        }, */
         pathRewrite: {
           '^/api': '' //路径重写
         }

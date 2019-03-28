@@ -1,12 +1,26 @@
 //江哥 对axios进行进一步的封装
 import axios from 'axios'
+import { Indicator } from 'mint-ui';
 
 // 配置默认请求的根地址
 axios.defaults.baseURL = 'http://10.211.55.6:3000';
 // 配置超时时间...
 axios.defaults.timeout = 5000;
 // 请求之前的拦截
+axios.interceptors.request.use((config)=> {
+  // 在发送请求之前做些什么
+  Indicator.open('加载中...');
+  return config;
+});
 // 请求之后的拦截
+axios.interceptors.response.use((response)=> {
+  // 对响应数据做点什么
+  setTimeout(()=>{
+    Indicator.close();
+  },500)
+  return response;
+});
+
 
 export default {
   get(url = '', data = {}){
@@ -24,7 +38,7 @@ export default {
   },
   post(url = '', data = {}){
     return new Promise(function (resolve, reject) {
-      axios.get(url, data)
+      axios.post(url, data)
         .then(function (response) {
           resolve(response.data);
         })

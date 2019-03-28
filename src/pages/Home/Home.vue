@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import BScroll from 'better-scroll'
 export default {
   name:"Home",
   data(){
@@ -47,11 +49,16 @@ export default {
   },
    created() {
       console.log(this.$route)
+      this.$store.commit('isShowTabbarHandle',true) // 显示tabbar
     },
     methods: {
       HandleChange(item,index){
         this.$router.replace(this.subRouterUrl[index])
-      }
+      },
+      
+    },
+      mounted() {
+     
     },
 }
 </script>
@@ -67,7 +74,8 @@ export default {
     }
     .homeScroll{
       flex: 1;
-      overflow-x: hidden;
+      height: 100%;
+      overflow: hidden;
     }
   }
 </style>

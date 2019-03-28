@@ -1,6 +1,6 @@
 <template>
   <div class="search-nav">
-    <div class='search-nav-btn'>
+    <div class='search-nav-btn' @click.prevent="isShow(true)">
       <i class='iconfont icon-sousuo'></i>
       <span>请输入商品关键字</span>
     </div>
@@ -10,6 +10,9 @@
 <script>
 export default {
   name: "SearchNav",
+  props:{
+    isShow:Function
+  }
 }
 </script>
 

@@ -6,10 +6,16 @@ import router from './router'
 import Vant from 'vant';
 import lyTab from 'ly-tab'
 import store from './store'
+import MintUI from 'mint-ui'
+import { Lazyload } from 'vant';
 
+// options 为可选参数，无则不传
+Vue.use(Lazyload);
 import 'vant/lib/index.css';
+import 'mint-ui/lib/style.css'
 
 Vue.use(Vant);
+Vue.use(MintUI)
 Vue.use(lyTab)
 Vue.config.productionTip = false
 
@@ -19,5 +25,4 @@ new Vue({
   router,
   store,
   render:h=>h(App)
- 
 })

@@ -1,4 +1,6 @@
 export default {
+  //是否显示tabbar
+  isShowTabbar:true,
   // 首页轮播图
   homecasual: [],
   // 首页导航
@@ -8,5 +10,9 @@ export default {
   // 推荐的商品列表
   recommendshoplist: [],
   //搜索商品列表
-  sreachshoplist:[]
+  sreachshoplist:[],
+  //用户信息
+  uesrInfo:{},
+  //购物车信息
+  cardprods:{}
 }

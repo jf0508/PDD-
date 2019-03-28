@@ -1,22 +1,24 @@
   <template>
     <div class="hot">
+      <div>
      <!--   轮播图 -->
-        <div class="swiper-container" v-if='homecasual.length>0' cancelable='true'>
-          <div class="swiper-wrapper" >
-            <div class="swiper-slide" v-for="(item,index) in homecasual" :key="index">
-            <img data-index="8" data-banner_id="11884" data-gg_id="0" :src="item.imgurl">
+          <div class="swiper-container" v-if='homecasual.length>0' cancelable='true'>
+            <div class="swiper-wrapper" >
+              <div class="swiper-slide" v-for="(item,index) in homecasual" :key="index">
+              <img data-index="8" data-banner_id="11884" data-gg_id="0" v-lazy="item.imgurl">
+              </div>
             </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
           </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
+        <!-- 标签导航 -->
+          <hot-nav></hot-nav>
+          <!-- 广告位 -->
+          <div class="hot-ad">
+            <img src="../../../../assets/imgs/home/hot_ad/home_ad.gif">
+          </div>
+          <Hot-shop-list></Hot-shop-list>
         </div>
-      <!-- 标签导航 -->
-        <hot-nav></hot-nav>
-        <!-- 广告位 -->
-        <div class="hot-ad">
-           <img src="../../../../assets/imgs/home/hot_ad/home_ad.gif">
-        </div>
-        <Hot-shop-list></Hot-shop-list>
     </div>
   </template>
 
@@ -25,7 +27,6 @@
   import 'swiper/dist/css/swiper.min.css'
   import HotNav from './HotNav.vue'
   import HotShopList from './HotShopList.vue'
-  import {getHomeCasual} from '../../../../api/index.js'
   import { mapState } from 'vuex';
   import BScroll from 'better-scroll'
 
@@ -35,11 +36,7 @@
       HotNav,
       HotShopList
     },
-    created() {
-      getHomeCasual().then(res=>{
-        console.log(res)
-      });
-    },
+    created() {},
     computed: {
      ...mapState(['homecasual'])
     },
@@ -69,12 +66,9 @@
             }
           }) 
         })
+         this.initScroll();
       },
-      reqHomeShopList(){
-         this.$nextTick(()=>{
-            let initScroll = new BScroll('.hot', {})
-         })
-      }
+     
     },
   }
   </script>

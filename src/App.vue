@@ -1,9 +1,12 @@
 <template>
   <div id="app">
     <div class="aapScroll">
-      <router-view></router-view>
+      <!-- <keep-alive> -->
+        <router-view></router-view>
+     <!--  </keep-alive> -->
     </div>
-    <tabbar></tabbar>
+    <!-- <tabbar v-if='$route.meta.isShowTabbar'/>  -->
+     <tabbar v-if='isShowTabbar'/> 
   </div>
   
 </template>
@@ -11,11 +14,19 @@
 <script>
 import './assets/icon.css'
 import tabbar from './components/Tabbar/tabbar'
+import {mapState} from 'vuex'
+
 export default {
   name: 'App',
   components:{
     tabbar
-  }
+  },
+  computed: {
+    ...mapState(['isShowTabbar']) //通过vuex控制tabbar
+  },
+  created() {
+    /* this.$store.dispatch('reqUserInfo')  //session存在问题 */
+  },
 }
 </script>
 

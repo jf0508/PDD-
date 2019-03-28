@@ -21,10 +21,10 @@
             <span>搜索</span>
           </li>
         </router-link>
-        <router-link to='/chat'>
+        <router-link to='/cart'>
           <li :class="{active:$route.fullPath.includes('/chat')}">
-            <i class="iconfont icon-liaotian"> </i>
-            <span>聊天</span>
+            <i class="iconfont icon-gouwuche1"> </i>
+            <span>购物车</span>
           </li>
         </router-link>
         <router-link to='/mine'>
